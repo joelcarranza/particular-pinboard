@@ -1,2 +1,3 @@
-particular-pinboard
-===================
+# particular pinboard
+
+A modification of the pinboard bookmarklet "seasoned to taste". User can customize the behavior of the bookmarklet though a number of flags identified at the top of the file. If configured to do so, the bookmarklet makes several efforts to extract a "clean" title which is free of SEO-junk and redundant information. It also pulls an approximate description from meta tags. Tags are automatically deduced from the extracted text according to appropriate "keywords" setup by the user.

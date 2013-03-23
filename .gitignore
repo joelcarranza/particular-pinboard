@@ -1,0 +1,5 @@
+*.py[cod]
+build
+node_modules
+*.sublime-project
+*.sublime-workspace
