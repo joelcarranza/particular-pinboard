@@ -41,7 +41,8 @@ var isSubtitle = function(string) {
   }
 };
 
-
+// loops over a node list and applies a function
+// returning the first value that is non-null
 var selectFromNodeList = function(nodeList,func,thisObj) {
   thisObj = thisObj || window;
   var l = nodeList.length;
@@ -64,7 +65,7 @@ var getTitle = function() {
   }
   var i,a;
 
-  // hentry microformat
+  // hEntry microformat
   if(selectFromNodeList(document.getElementsByClassName('hentry'), function(x) {return true;})) {
     var htitle = document.querySelector(
         '.hentry .entry-title'
@@ -92,6 +93,7 @@ var getTitle = function() {
   // method 2 - look at header tags and see if it matches part of title
   // rands in repose uses a h4!
   // noladefender uses a h6
+  // TODO: header tags
   var queries = ['h1','h2','h3','h4','h5','h6'];
   var h;
   var headerTitle;
@@ -117,6 +119,7 @@ var getTags = function(text) {
   var tags = [];
   var re;
   for(keyword in tagKeywords) {
+    // TODO: allow keyword to be a regexp
     re = new RegExp("\\b"+keyword+"\\b","i");
     if(re.test(text)) {
       tags.push(tagKeywords[keyword]);
@@ -128,6 +131,7 @@ var getTags = function(text) {
 
 var getMetaDescription = function() {
   var e;
+  // refactor into a 
   e = document.querySelector("meta[name='description']");
   if(e) {
     return e.content.trim();
@@ -170,7 +174,7 @@ var args = [
   'url=', encodeURIComponent(location.href),
   '&title=', encodeURIComponent(title),
   '&description=', encodeURIComponent(description),
-  // this could include more interesting text from page
+  // this could based on a general function "getText()"
   '&tags=', encodeURIComponent(getTags(document.title+" "+description+" "+getMetaDescription()).join(" "))
 ];
 
