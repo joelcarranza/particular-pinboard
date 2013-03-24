@@ -4,4 +4,4 @@
 
 import sys
 text = sys.stdin.read()
-sys.stdout.write("javascript:(function(){%s})()" % text)
+sys.stdout.write("javascript:%s" % text)

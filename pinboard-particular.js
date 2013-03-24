@@ -1,9 +1,14 @@
+(function() {
+
 /******************* begin configuration options ***************************/
 
-// Change `silent` to true to invoke the promptless, self-closing 
+// Change `read` to true to invoke the promptless, self-closing 
 // version of the bookmarklet.
 var readlater = false;
 var customUrl = null;
+// when set to true selected text is quoted using markdown quote syntax
+var quoteSelectionAsMarkdown = true;
+// when this text appears in title or description they are added as tags
 var tagKeywords = {
   javascript:'javascript',
   js:'javascript',
@@ -13,11 +18,7 @@ var tagKeywords = {
   vimeo:'video',
   video:'video',
   books:'book',
-  book:'book',
-  "Sublime Text":'sublimetext',
-  "Omnifocus":"omnifocus gtd",
-  "New Orleans":"neworleans",
-  "NOLA":"neworleans"
+  book:'book'
 };
 
 /********************* begin code ********************************************/
@@ -32,6 +33,7 @@ var normalize = function(string) {
 
 var normalizedDocumentTitle = normalize(document.title);
 
+// used as tes
 var isSubtitle = function(string) {
   if(string) {
     return normalizedDocumentTitle.indexOf(normalize(string)) != -1;
@@ -91,14 +93,11 @@ var getTitle = function() {
   }
   
   // method 2 - look at header tags and see if it matches part of title
-  // rands in repose uses a h4!
-  // noladefender uses a h6
-  // TODO: header tags
-  var queries = ['h1','h2','h3','h4','h5','h6'];
+  var headerTags = ['h1','h2','h3','h4','h5','h6'];
   var h;
   var headerTitle;
-  for(var j=0;j<queries.length;++j) {
-    selectFromNodeList(document.getElementsByTagName(queries[j]), function(h) {
+  for(var j=0;j<headerTags.length;++j) {
+    selectFromNodeList(document.getElementsByTagName(headerTags[j]), function(h) {
       h_text = h.textContent.trim();
       if(isSubtitle(h_text) && (!headerTitle || h_text.length > headerTitle.length)) {
         headerTitle = h_text;
@@ -119,8 +118,7 @@ var getTags = function(text) {
   var tags = [];
   var re;
   for(keyword in tagKeywords) {
-    // TODO: allow keyword to be a regexp
-    re = new RegExp("\\b"+keyword+"\\b","i");
+    re = keyword instanceof RegExp ? keyword : new RegExp("\\b"+keyword+"\\b","i");
     if(re.test(text)) {
       tags.push(tagKeywords[keyword]);
     }
@@ -128,10 +126,8 @@ var getTags = function(text) {
   return tags;
 };
 
-
 var getMetaDescription = function() {
   var e;
-  // refactor into a 
   e = document.querySelector("meta[name='description']");
   if(e) {
     return e.content.trim();
@@ -147,8 +143,9 @@ var getDescription = function() {
   var text;
   // Grab the text selection (if any) and quote it
   if('' !== (text = String(document.getSelection()))) {
-    // TODO: configurable as markdown quote
-    text = text.trim().split("\n").map(function(s) {return "> "+s;}).join("\n");
+    if(quoteSelectionAsMarkdown) {
+      text = text.trim().split("\n").map(function(s) {return "> "+s;}).join("\n");
+    }
   }
   
   if(!text) {
@@ -196,3 +193,5 @@ else {
     pin.blur();
   }  
 }
+
+})()
