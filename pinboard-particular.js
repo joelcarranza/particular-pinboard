@@ -21,6 +21,16 @@ var tagKeywords = {
   book:'book'
 };
 
+// this matches domain names to special selectors for the title
+var titleTweaks = {
+  "github.com":".entry-title .js-current-repository"
+};
+
+// this matches domain names to special selectors for the title
+var descriptionTweaks = {
+  "www.kickstarter.com":".short-blurb"
+};
+
 /********************* begin code ********************************************/
 
 // reduce a string to some canonical representation
@@ -64,10 +74,18 @@ var selectFromNodeList = function(nodeList,func,thisObj) {
 
 var getTitle = function() {
   var url = location.href;
+  var host = location.hostname;
+  var e;
+  if(host in titleTweaks) {
+    e = document.querySelector(titleTweaks[host]);
+    if(e) {
+      return elementText(e);
+    }
+  }
   var documentTitle = document.title;
   var e = document.querySelector("meta[property='og:title']");
   if(e) {
-    documentTitle = e.content.trim();
+    documentTitle = e.content.trim().replace(/\s+/g,' ');
   }
   var i,a;
 
@@ -134,11 +152,11 @@ var getMetaDescription = function() {
   var e;
   e = document.querySelector("meta[name='description']");
   if(e) {
-    return e.content.trim();
+    return e.content.trim().replace(/\s+/g,' ');
   }
   e = document.querySelector("meta[property='og:description']");
   if(e) {
-    return e.content.trim();
+    return e.content.trim().replace(/\s+/g,' ');
   }
   return "";
 };
@@ -149,6 +167,15 @@ var getDescription = function() {
   if('' !== (text = String(document.getSelection()))) {
     if(quoteSelectionAsMarkdown) {
       text = text.trim().split("\n").map(function(s) {return "> "+s;}).join("\n");
+    }
+  }
+
+  var host = location.hostname;
+  var e;
+  if(host in descriptionTweaks) {
+    e = document.querySelector(descriptionTweaks[host]);
+    if(e) {
+      return elementText(e);
     }
   }
   
