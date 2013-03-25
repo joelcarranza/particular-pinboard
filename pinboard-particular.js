@@ -31,6 +31,10 @@ var normalize = function(string) {
   return string.toLowerCase();
 }
 
+var elementText = function(el) {
+  return el ? el.textContent.trim().replace(/\s+/g,' ') : null;
+}
+
 var normalizedDocumentTitle = normalize(document.title);
 
 // used as tes
@@ -73,7 +77,7 @@ var getTitle = function() {
         '.hentry .entry-title'
       );
     if(htitle) {
-      return htitle.textContent.trim();
+      return elementText(htitle)
     }
   }
 
@@ -81,7 +85,7 @@ var getTitle = function() {
   
   var a_text = selectFromNodeList(document.getElementsByTagName('A'), function(a) {
     if(a.href == url) {
-      a_text = a.textContent.trim();
+      a_text = elementText(a);
       if(isSubtitle(a_text)) {
         return a_text;
       }
@@ -98,7 +102,7 @@ var getTitle = function() {
   var headerTitle;
   for(var j=0;j<headerTags.length;++j) {
     selectFromNodeList(document.getElementsByTagName(headerTags[j]), function(h) {
-      h_text = h.textContent.trim();
+      h_text = elementText(h)
       if(isSubtitle(h_text) && (!headerTitle || h_text.length > headerTitle.length)) {
         headerTitle = h_text;
       }
@@ -166,7 +170,6 @@ if(ix == 0) {
 else if(ix == description.length-title.length) {
   description = description.substring(0,ix).trim();
 }
-
 var args = [
   'url=', encodeURIComponent(location.href),
   '&title=', encodeURIComponent(title),
