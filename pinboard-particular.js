@@ -14,11 +14,19 @@ var tagKeywords = {
   js:'javascript',
   python:'python',
   ios:'ios',
+  git:'git',
+  
   youtube:'video',
   vimeo:'video',
   video:'video',
   books:'book',
-  book:'book'
+  book:'book',
+  beer:'beer',
+  hops:'beer',
+  ipa:'beer',
+  coffee:'coffee',
+  "new orleans":'neworleans',
+  nola:"neworleans"
 };
 
 // this matches domain names to special selectors for the title
