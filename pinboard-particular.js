@@ -5,7 +5,7 @@
 // Change `read` to true to invoke the promptless, self-closing 
 // version of the bookmarklet.
 var readlater = false;
-var customUrl = null;
+var appUrl = null;
 // when set to true selected text is quoted using markdown quote syntax
 var quoteSelectionAsMarkdown = true;
 // when this text appears in title or description they are added as tags
@@ -182,8 +182,13 @@ if(readlater) {
     '&jump=', 'close'
   ]);
 }
-if(customUrl) {
-  open(customUrl+args.join(''), '', '');
+if(appUrl) {
+  args = args.concat([
+    '&x-source=Safari',
+    '&x-success=',encodeURIComponent(location.href),
+    '&x-cancel=',encodeURIComponent(location.href)
+  ]);
+  window.location = appUrl+args.join('');
 }
 else {
   var pin = open('http://pinboard.in/add?'+args.join(''), 'Pinboard', 'toolbar=no,width=610,height=350');

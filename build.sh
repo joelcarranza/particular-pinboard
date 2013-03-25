@@ -9,4 +9,4 @@ BOOKMARKLET="python bookmarklet.py"
 mkdir $OUT
 cat $SRC | $MINIFY | $BOOKMARKLET > $OUT/bookmark.js
 sed 's/readlater = false/readlater = true/' $SRC | $MINIFY | $BOOKMARKLET > $OUT/readlater.js
-sed 's/customUrl = null/customUrl = "pinbook:\/\/\/add?"/' $SRC | $MINIFY | $BOOKMARKLET > $OUT/pinbook.js
+sed 's/appUrl = null/appUrl = "pinbook:\/\/x-callback-url\/add?"/' $SRC | $MINIFY | $BOOKMARKLET > $OUT/pinbook.js
