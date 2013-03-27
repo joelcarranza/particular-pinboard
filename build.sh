@@ -1,14 +1,27 @@
-#!/bin/bash
+#!/bin/sh
 
 SRC=pinboard-particular.js
 OUT=build
-MINIFY="uglifyjs -mt"
-BOOKMARKLET="python bookmarklet.py"
+MINIFY=$(which uglifyjs)
+BACKUP_UGLIFY="./node_modules/uglify-js/bin/uglifyjs"
+if [ -z "$MINIFY" ]; then
+    if [ -x "$BACKUP_UGLIFY" ]; then
+        MINIFY="$BACKUP_UGLIFY"
+    else
+        printf "No uglifyjs found. Bailing out\n"
+        exit 1
+    fi
+fi
+MINIFY="${MINIFY} -mt"
 
 if [ ! -d $OUT ]; then
-mkdir $OUT
+    mkdir $OUT
 fi
 
-cat $SRC | $MINIFY | $BOOKMARKLET > $OUT/bookmark.js
-sed 's/readlater = false/readlater = true/' $SRC | $MINIFY | $BOOKMARKLET > $OUT/readlater.js
-sed 's/appUrl = null/appUrl = "pinbook:\/\/x-callback-url\/add?"/' $SRC | $MINIFY | $BOOKMARKLET > $OUT/pinbook.js
+printf "javascript:%s" "$($MINIFY 2>/dev/null < $SRC)" > $OUT/bookmark.js
+printf "javascript:%s" > $OUT/readlater.js
+sed 's/readlater = false/readlater = true/' $SRC |
+    $MINIFY 2>/dev/null >> $OUT/readlater.js
+printf "javascript:%s" > $OUT/pinbook.js
+sed 's/appUrl = null/appUrl = "pinbook:\/\/x-callback-url\/add?"/' $SRC |
+    $MINIFY 2>/dev/null >> $OUT/pinbook.js
