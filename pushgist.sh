@@ -3,6 +3,6 @@
 OUT=build
 
 ./build.sh
-jist $OUT/bookmark.js -u cfd44a7a72442bb734eb
-jist $OUT/readlater.js -u 98d36e72c48d1795553a
-jist $OUT/pinbook.js -u ff3d0c2e84def744a53d
+jist $OUT/bookmark.js -u e945f9be615aa7e92931
+jist $OUT/readlater.js -u dfba062c093b3e110b08
+jist $OUT/pinbook.js -u 9a4071cb313b41019bd0

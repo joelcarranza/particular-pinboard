@@ -10,9 +10,9 @@ This bookmarklet is based on an existing modification to the pinboard bookmarkle
 
 ## Bookmarklets
 
-- [Regular](https://gist.github.com/cfd44a7a72442bb734eb)
-- [Read Later](https://gist.github.com/98d36e72c48d1795553a)
-- [Pinbook iOS app](https://gist.github.com/ff3d0c2e84def744a53d)
+- [Regular](https://gist.github.com/e945f9be615aa7e92931)
+- [Read Later](https://gist.github.com/dfba062c093b3e110b08)
+- [Pinbook iOS app](https://gist.github.com/9a4071cb313b41019bd0)
 
 # Building
 
