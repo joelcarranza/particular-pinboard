@@ -7,7 +7,7 @@
 var readlater = false;
 var appUrl = null;
 // when set to true selected text is quoted using markdown quote syntax
-var quoteSelectionAsMarkdown = true;
+var quoteSelectionAsMarkdown = false;
 // when this text appears in title or description they are added as tags
 var tagKeywords = {
   javascript:'javascript',
