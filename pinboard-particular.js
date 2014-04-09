@@ -31,6 +31,9 @@ var descriptionTweaks = {
   "www.kickstarter.com":".short-blurb"
 };
 
+// limit long titles and descriptions, mostly to avoid 'HTTP/1.0 414 Request URI too long'
+var text_length_limit = 1000;
+
 /********************* begin code ********************************************/
 
 // reduce a string to some canonical representation
@@ -42,7 +45,7 @@ var normalize = function(string) {
 }
 
 var elementText = function(el) {
-  return el ? el.textContent.trim().replace(/\s+/g,' ') : null;
+  return el ? el.textContent.trim().replace(/\s+/g,' ').substring(0, text_length_limit) : null;
 }
 
 var normalizedDocumentTitle = normalize(document.title);
@@ -152,11 +155,11 @@ var getMetaDescription = function() {
   var e;
   e = document.querySelector("meta[name='description']");
   if(e) {
-    return e.content.trim().replace(/\s+/g,' ');
+    return e.content.trim().replace(/\s+/g,' ').substring(0, text_length_limit);
   }
   e = document.querySelector("meta[property='og:description']");
   if(e) {
-    return e.content.trim().replace(/\s+/g,' ');
+    return e.content.trim().replace(/\s+/g,' ').substring(0, text_length_limit);
   }
   return "";
 };
