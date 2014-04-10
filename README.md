@@ -24,6 +24,8 @@ To install UglifyJS:
 
 	npm install uglify-js
 
+Please note the dash between "uglify" and "js". It is possible to install an older version without using the dash that does include the command line tool.
+
 # Customization
 
 You can enable or disable various features by modifying the constants at the top of the source file. These should be well documented in source. Of particular interest for users are keyword rules which determine the tags based on the text of the document.
