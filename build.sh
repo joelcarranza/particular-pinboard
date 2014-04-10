@@ -22,6 +22,6 @@ printf "javascript:%s" "$($MINIFY 2>/dev/null < $SRC)" > $OUT/bookmark.js
 printf "javascript:%s" > $OUT/readlater.js
 sed 's/readlater = false/readlater = true/' $SRC |
     $MINIFY 2>/dev/null >> $OUT/readlater.js
-printf "javascript:%s" > $OUT/pinbook.js
-sed 's/appUrl = null/appUrl = "pinbook:\/\/x-callback-url\/add?"/' $SRC |
-    $MINIFY 2>/dev/null >> $OUT/pinbook.js
+printf "javascript:%s" > $OUT/pinswift.js
+sed 's/appUrl = null/appUrl = "pinswift:\/\/x-callback-url\/add?"/' $SRC |
+    $MINIFY 2>/dev/null >> $OUT/pinswift.js
