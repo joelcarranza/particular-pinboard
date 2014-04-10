@@ -67,7 +67,7 @@ var selectFromNodeList = function(nodeList,func,thisObj) {
   var l = nodeList.length;
   var result;
   for(var i=0;i<l;++i) {
-    result = func.call(thisObj,nodeList.item(i));
+    result = func.call(thisObj,nodeList[i]);
     if(result !== null) {
       return result;
     }
