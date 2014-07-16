@@ -2,13 +2,17 @@
 
 /******************* begin configuration options ***************************/
 
-// Change `read` to true to invoke the promptless, self-closing
-// version of the bookmarklet.
+// Change `read` to true to invoke the promptless, self-closing version of the
+// bookmarklet.
 var readlater = false;
 var appUrl = null;
-// when set to true selected text is quoted using markdown quote syntax
-var quoteSelectionAsMarkdown = false;
-// when this text appears in title or description they are added as tags
+
+// When set to true, selected text is quoted using <blockquote>.
+// Note that Markdown is not supported in link descriptions because of an XSS
+// vulnerability: https://twitter.com/Pinboard/status/22436355472625664
+var quoteSelection = false;
+
+// When this text appears in title or description, they are added as tags.
 var tagKeywords = {
   javascript:'javascript',
   js:'javascript',
@@ -166,8 +170,8 @@ var getDescription = function() {
   var text;
   // Grab the text selection (if any) and quote it
   if('' !== (text = String(document.getSelection()))) {
-    if(quoteSelectionAsMarkdown) {
-      text = text.trim().split("\n").map(function(s) {return "> "+s;}).join("\n");
+    if(quoteSelection) {
+      text = text.trim().split("\n").map(function(s) {return "<blockquote>"+s+"</blockquote>";}).join("\n");
     }
   }
 
@@ -203,7 +207,7 @@ var tags = getTags(document.title+" "+description+" "+getMetaDescription());
 
 if(textLengthLimit > 0) {
   title = title.substring(0, textLengthLimit);
-  description = description.substring(0, textLengthLimit);  
+  description = description.substring(0, textLengthLimit);
 }
 
 var args = [
