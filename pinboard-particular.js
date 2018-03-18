@@ -32,6 +32,7 @@ var titleTweaks = {
 
 // this matches domain names to special selectors for the title
 var descriptionTweaks = {
+  "github.com":"[itemprop='about']",
   "www.kickstarter.com":".short-blurb"
 };
 
